@@ -6,8 +6,15 @@ from apps.users import user
 SECRET_KEY = "a8f61fbb213a33775e551aedd4269cf79d68ce93"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-app = FastAPI()
 
+tags_metadata = [
+    {
+        "name": "Users",
+        "description": "Operations with users.",
+    },
+]
+
+app = FastAPI(openapi_tags=tags_metadata)
 app.include_router(user.router)
 
 
