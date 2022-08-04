@@ -3,6 +3,11 @@ from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, T
 from database import Base
 
 
+user_group = Table('user_group', Base.metadata,
+                   Column('user_id', Integer, ForeignKey('users.id'), primary_key = True),
+                   Column('group_id', Integer, ForeignKey('groups.id'), primary_key = True)
+                   )
+
 
 class User(Base):
     __tablename__ = "users"
@@ -17,8 +22,14 @@ class User(Base):
     profile_picture = Column(String(100), nullable = True)
     created_on = Column(DateTime, nullable = False)
     updated_on = Column(DateTime, nullable = True)
-    # group = relationship('Group', secondary = user_group)
+    group = relationship('Group', secondary = user_group)
     
+class Group(Base):
+    __tablename__ = "groups"
+    id = Column(Integer, primary_key = True)
+    name = Column(String(30), nullable = False)
+    user = relationship("User", secondary = user_group)
+
 
     
 
