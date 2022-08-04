@@ -33,9 +33,10 @@ def create_user(user:schema.UserSchema):
 
 
 @router.patch('/update_user/{id}/')
-def update_user(id:int, user:schema.UserSchema):
+def update_user(id:int, user:schema.UserSchema, response:Response):
     user_to_update = dao_handler.user_dao.get_by_id(id)
     if not user_to_update:
+        response.status_code = status.HTTP_404_NOT_FOUND
         return {'error':'User you are looking for is not exists!'}
     user_to_update.first_name = user.first_name
     user_to_update.last_name = user.last_name
