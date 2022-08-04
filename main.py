@@ -13,7 +13,7 @@ tags_metadata = [
         "description": "Operations with users.",
     },
     {
-        "name": "Groups",
+        "name": "User-Groups",
         "description": "Operations with groups.",
     },
 ]
