@@ -60,6 +60,13 @@ def get_all_groups():
     all_groups = db.query(models.Group).all()
     return all_groups
 
+@app.get('/gropus/{id}')
+def get_group(id:int):
+    group = db.query(models.Group).filter_by(id=id).first()
+    if not group:
+        return {'error':'Group you are looking for is not exists!'}
+    return group
+
 @app.post('/group/')
 def create_group(group:schema.GroupSchema ):
     if db.query(models.Group).filter_by(name = group.name).first():
