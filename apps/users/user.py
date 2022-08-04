@@ -9,6 +9,7 @@ from datetime import datetime
 
 router = APIRouter(prefix='/users', tags=['Users'])
 
+
 @router.get('/', response_model=list[schema.UserSchema])
 def get_all_users():
     all_users = dao_handler.user_dao.get_all()
