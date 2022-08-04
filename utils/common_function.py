@@ -1,6 +1,6 @@
 import random
-from models import User
-from database import db
+from database.models import User
+from database.database import db
 import string
 
 ALL_ALPHABATES = string.ascii_letters

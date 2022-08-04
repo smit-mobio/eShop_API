@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
 class UserSchema(BaseModel):
+    id:int
     username:str
     first_name:str
     last_name:str
@@ -11,11 +12,7 @@ class UserSchema(BaseModel):
     class Config:
         orm_mode = True
         
-class GroupSchema(BaseModel):
-    name:str
-      
-    class Config:
-        orm_mode = True
+
 
 
         

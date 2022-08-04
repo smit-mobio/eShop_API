@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text
-from database import Base
+from database.database import Base, db
 
 
 user_group = Table('user_group', Base.metadata,
@@ -9,13 +9,28 @@ user_group = Table('user_group', Base.metadata,
                    )
 
 
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, Text
+
+class Data:
+    
+    def add(object):
+        db.add(object)
+        db.commit()
+        
+    def delete(object):
+        db.delete(object)
+        db.commit()
+        
+    def commit():
+        db.commit()
+        
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key = True)
     first_name = Column(String(50), nullable = True)
     last_name = Column(String(50), nullable = True)
     username = Column(String(50), nullable = False)
-    email = Column(String(30), nullable = False)
+    email = Column(String(30), nullable = False, unique = True)
     password = Column(Text, nullable = False)
     is_active = Column(Boolean, default = True)
     phone = Column(String(10), nullable = True)
