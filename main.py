@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from apps.users import user  
-
+from apps.users import user 
 
 SECRET_KEY = "a8f61fbb213a33775e551aedd4269cf79d68ce93"
 ALGORITHM = "HS256"
