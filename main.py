@@ -25,7 +25,15 @@ def get_all_users():
     all_users = db.query(models.User).all()
     return all_users
 
+@app.get('/users/{id}')
+def get_user(id:int):
+    user = db.query(models.User).filter_by(id=id).first()
+    if not user:
+        return {'error':'User you are looking for is not exists!'}
+    return user
 
+
+==== BASE ====
 @app.post('/users/')
 def create_user(user:schema.UserSchema):
     has_password = generate_password_hash(user.password, method="sha256")
