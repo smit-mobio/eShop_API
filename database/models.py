@@ -1,9 +1,20 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text
 from database.database import Base
-
-
-
+from database.database import db
+class Data:
+    
+    def add(object):
+        db.add(object)
+        db.commit()
+        
+    def delete(object):
+        db.delete(object)
+        db.commit()
+        
+    def commit():
+        db.commit()
+        
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key = True)
