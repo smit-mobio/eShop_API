@@ -11,5 +11,11 @@ class UserSchema(BaseModel):
     class Config:
         orm_mode = True
         
+class GroupSchema(BaseModel):
+    name:str
+      
+    class Config:
+        orm_mode = True
+
 
         
