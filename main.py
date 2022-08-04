@@ -1,5 +1,5 @@
 from datetime import datetime
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Response, status
 import uvicorn
 import schema
 import models
@@ -16,6 +16,8 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 app = FastAPI()
 
+
+
 @app.get('/')
 def index():
     return {'message':'Hello World!'}
@@ -26,9 +28,10 @@ def get_all_users():
     return all_users
 
 @app.get('/users/{id}')
-def get_user(id:int):
+def get_user(id:int, response:Response):
     user = db.query(models.User).filter_by(id=id).first()
     if not user:
+        response.status_code = status.HTTP_404_NOT_FOUND
         return {'error':'User you are looking for is not exists!'}
     return user
 
@@ -44,9 +47,10 @@ def create_user(user:schema.UserSchema):
 
 
 @app.patch('/users/{id}/')
-def update_user(id:int, user:schema.UserSchema):
+def update_user(id:int, user:schema.UserSchema, response:Response):
     user_to_update = db.query(models.User).filter_by(id = id).first()
     if not user_to_update:
+        response.status_code = status.HTTP_404_NOT_FOUND
         return {'error':'User you are looking for is not exists!'}
     user_to_update.first_name = user.first_name
     user_to_update.last_name = user.last_name
@@ -61,20 +65,32 @@ def get_all_groups():
     return all_groups
 
 @app.get('/gropus/{id}')
-def get_group(id:int):
+def get_group(id:int, response:Response):
     group = db.query(models.Group).filter_by(id=id).first()
     if not group:
+        response.status_code = status.HTTP_404_NOT_FOUND
         return {'error':'Group you are looking for is not exists!'}
     return group
 
 @app.post('/group/')
-def create_group(group:schema.GroupSchema ):
+def create_group(group:schema.GroupSchema, response:Response ):
     if db.query(models.Group).filter_by(name = group.name).first():
+        response.status_code = status.HTTP_404_NOT_FOUND
         return {'error':f"'{group.name}' group  is already exists!"}
     new_group = models.Group(name = group.name)
     db.add(new_group)
     db.commit()
     return {'message':f"New '{new_group.name}' group is created successfully!"}
+
+@app.patch('/gropus/{id}')
+def update_group(id:int, group:schema.GroupSchema, response:Response):
+    group_to_update = db.query(models.Group).filter_by(id=id).first()
+    if not group_to_update:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {'error':'Group you are looking for is not exists!'} , 404
+    group_to_update.name = group.name
+    db.commit()
+    return group_to_update
 
 
 if __name__ == "__main__":
