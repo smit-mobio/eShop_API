@@ -26,7 +26,6 @@ def get_all_users():
     return all_users
 
 
-
 @app.post('/users/')
 def create_user(user:schema.UserSchema):
     has_password = generate_password_hash(user.password, method="sha256")
@@ -48,6 +47,21 @@ def update_user(id:int, user:schema.UserSchema):
     user_to_update.update_on = datetime.now()
     db.commit()
     return {'message':'User profile is successfully updated!'}
+
+@app.get('/groups/', response_model=list[schema.GroupSchema])
+def get_all_groups():
+    all_groups = db.query(models.Group).all()
+    return all_groups
+
+@app.post('/group/')
+def create_group(group:schema.GroupSchema ):
+    if db.query(models.Group).filter_by(name = group.name).first():
+        return {'error':f"'{group.name}' group  is already exists!"}
+    new_group = models.Group(name = group.name)
+    db.add(new_group)
+    db.commit()
+    return {'message':f"New '{new_group.name}' group is created successfully!"}
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host='localhost', port=8000, reload= True)
