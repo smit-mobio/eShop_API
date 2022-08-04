@@ -33,7 +33,6 @@ def get_user(id:int):
     return user
 
 
-==== BASE ====
 @app.post('/users/')
 def create_user(user:schema.UserSchema):
     has_password = generate_password_hash(user.password, method="sha256")
