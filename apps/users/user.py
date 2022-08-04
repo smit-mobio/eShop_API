@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Response, status
-import apps.users.schema as schema
-import database.models as models
+from apps.users import schema
 from database.models import Data
+from database import models
 from utils import common_function
 from database.dao import dao_handler
 from werkzeug.security import generate_password_hash

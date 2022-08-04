@@ -19,8 +19,14 @@ class UserDao(GenericDao):
     def get_by_email(self, email):
         return db.query(self.model).filter_by(email = email).first()
     
+class GroupDao(GenericDao):
+    model = models.Group
     
+    def get_by_name(self, name):
+        return db.query(self.model).filter_by(name = name).first()
+
 class DaoHandler:
     user_dao = UserDao()
+    group_dao = GroupDao()
     
 dao_handler = DaoHandler()
