@@ -28,6 +28,8 @@ class Group(Base):
     __tablename__ = "groups"
     id = Column(Integer, primary_key = True)
     name = Column(String(30), nullable = False)
+    created_on = Column(DateTime, nullable = False)
+    updated_on = Column(DateTime, nullable = False)
     user = relationship("User", secondary = user_group)
 
 
