@@ -12,6 +12,10 @@ tags_metadata = [
         "name": "Users",
         "description": "Operations with users.",
     },
+    {
+        "name": "Groups",
+        "description": "Operations with groups.",
+    },
 ]
 
 app = FastAPI(openapi_tags=tags_metadata)
