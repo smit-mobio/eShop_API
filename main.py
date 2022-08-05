@@ -4,6 +4,7 @@ from apps.users import user
 from apps.group import group
 from apps.authentication import auth
 
+
 SECRET_KEY = "a8f61fbb213a33775e551aedd4269cf79d68ce93"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
