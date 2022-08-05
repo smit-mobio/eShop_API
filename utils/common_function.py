@@ -2,7 +2,9 @@ import random
 from database.models import User
 from database.database import db
 import string
+from passlib.context import CryptContext
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALL_ALPHABATES = string.ascii_letters
 SYMBOLS = [
     "~",
@@ -60,3 +62,10 @@ def create_username(email):
         username = username.split('.')[0]
     username = modify_username(username)
     return username
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
