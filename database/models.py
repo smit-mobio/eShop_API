@@ -1,6 +1,16 @@
+from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text
+from database.database import Base, db
+
+
+user_group = Table('user_group', Base.metadata,
+                   Column('user_id', Integer, ForeignKey('users.id'), primary_key = True),
+                   Column('group_id', Integer, ForeignKey('groups.id'), primary_key = True)
+                   )
+
+
 from sqlalchemy import Boolean, Column, DateTime, Integer, String, Text
-from database.database import Base
-from database.database import db
+
 class Data:
     
     def add(object):
@@ -27,7 +37,16 @@ class User(Base):
     profile_picture = Column(String(100), nullable = True)
     created_on = Column(DateTime, nullable = False)
     updated_on = Column(DateTime, nullable = True)
+    group = relationship('Group', secondary = user_group)
     
+class Group(Base):
+    __tablename__ = "groups"
+    id = Column(Integer, primary_key = True)
+    name = Column(String(30), nullable = False)
+    created_on = Column(DateTime, nullable = False)
+    updated_on = Column(DateTime, nullable = False)
+    user = relationship("User", secondary = user_group)
+
 
     
 
