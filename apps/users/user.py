@@ -4,8 +4,8 @@ import database.models as models
 from database.models import Data
 from utils import common_function
 from database.dao import dao_handler
-from werkzeug.security import generate_password_hash
 from datetime import datetime
+
 
 router = APIRouter(prefix='/users', tags=['Users'])
 
@@ -25,7 +25,7 @@ def get_user(id:int, response:Response):
 
 @router.post('/create_user/')
 def create_user(user:schema.UserSchema):
-    has_password = generate_password_hash(user.password, method="sha256")
+    has_password = common_function.get_password_hash(user.password)
     new_user = models.User(first_name = user.first_name, last_name = user.last_name, email=user.email, password = has_password, username = common_function.create_username(user.email), created_on = datetime.now(), phone = user.phone)
     Data.add(new_user)
     new_user = dao_handler.user_dao.get_by_id(new_user.id)
