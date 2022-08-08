@@ -19,6 +19,8 @@ class UserDao(GenericDao):
     def get_by_email(self, email):
         return db.query(self.model).filter_by(email = email).first()
     
+    
+    
 class GroupDao(GenericDao):
     model = models.Group
     
