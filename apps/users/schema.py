@@ -12,7 +12,8 @@ class UserSchema(BaseModel):
     class Config:
         orm_mode = True
         
-
+class UserActiveSchema(UserSchema):
+    is_active:bool
 
 
         
