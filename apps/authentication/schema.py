@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from apps.users.schema import UserSchema
+from pydantic import BaseModel, EmailStr
 
 class Token(BaseModel):
     access_token: str
@@ -7,7 +6,8 @@ class Token(BaseModel):
 
     
 class TokenData(BaseModel):
-    username:str 
+    email:EmailStr
     
-class UserInDB(UserSchema):
-    hashed_password: str
+class ChangePasswordSchema(BaseModel):
+    password:str
+    new_password:str    
