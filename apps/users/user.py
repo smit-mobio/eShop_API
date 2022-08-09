@@ -31,10 +31,8 @@ def create_user(user:schema.UserCreateSchema, response:Response):
         response.status_code = status.HTTP_404_NOT_FOUND
         return  {'error':'Please enter a valid group_id'}
     get_group = dao_handler.group_dao.get_by_id(user.group_id)
-    print(get_group)
-    new_user.group.extend(list(get_group)) 
+    new_user.group = [get_group] 
     Data.add(new_user)
-    # Data.commit()
     new_user = dao_handler.user_dao.get_by_id(new_user.id)
     return {'new_user': new_user}
 
