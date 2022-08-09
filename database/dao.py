@@ -26,9 +26,15 @@ class GroupDao(GenericDao):
     
     def get_by_name(self, name):
         return db.query(self.model).filter_by(name = name).first()
+    
+    def get_group_with_id(self):
+        groups = super().get_all()
+        group_dict = {}
+        for i in groups:group_dict.update({i.name:i.id}) 
+        return group_dict
 
 class DaoHandler:
     user_dao = UserDao()
     group_dao = GroupDao()
-    
 dao_handler = DaoHandler()
+
