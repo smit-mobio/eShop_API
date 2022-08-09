@@ -4,8 +4,8 @@ from database.models import Data
 from database import models
 from utils import common_function
 from database.dao import dao_handler
-from werkzeug.security import generate_password_hash
 from datetime import datetime
+
 
 router = APIRouter(prefix='/users', tags=['Users'])
 
@@ -22,6 +22,7 @@ def get_user(id:int, response:Response):
         response.status_code = status.HTTP_404_NOT_FOUND
         return {'error':'User you are looking for is not exists!'}
     return user
+
 
 @router.post('/create_user/', description=f"Pass group_id in group field to select group.<br>{dao_handler.group_dao.get_group_with_id()}")
 def create_user(user:schema.UserCreateSchema, response:Response):
