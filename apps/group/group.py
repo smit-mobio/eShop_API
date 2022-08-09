@@ -8,7 +8,7 @@ from datetime import datetime
 
 router = APIRouter(prefix='/groups', tags=['User-Groups'])
 
-@router.get('/', response_model=list[schema.GroupSchema])
+@router.get('/', response_model=list[schema.GroupWithId])
 def get_all_groups():
     all_groups = dao_handler.group_dao.get_all()
     return all_groups

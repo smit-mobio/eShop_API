@@ -5,3 +5,7 @@ class GroupSchema(BaseModel):
       
     class Config:
         orm_mode = True
+        
+        
+class GroupWithId(GroupSchema):
+    id:int

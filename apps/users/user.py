@@ -23,10 +23,16 @@ def get_user(id:int, response:Response):
         return {'error':'User you are looking for is not exists!'}
     return user
 
-@router.post('/create_user/')
-def create_user(user:schema.UserSchema):
-    has_password = common_function.get_password_hash(user.password)
+
+@router.post('/create_user/', description=f"Pass group_id in group field to select group.<br>{dao_handler.group_dao.get_group_with_id()}")
+def create_user(user:schema.UserCreateSchema, response:Response):
+    has_password = generate_password_hash(user.password, method="sha256")
     new_user = models.User(first_name = user.first_name, last_name = user.last_name, email=user.email, password = has_password, username = common_function.create_username(user.email), created_on = datetime.now(), phone = user.phone)
+    if user.group_id not in [i.id for i in dao_handler.group_dao.get_all()]:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return  {'error':'Please enter a valid group_id'}
+    get_group = dao_handler.group_dao.get_by_id(user.group_id)
+    new_user.group = [get_group] 
     Data.add(new_user)
     new_user = dao_handler.user_dao.get_by_id(new_user.id)
     return {'new_user': new_user}
