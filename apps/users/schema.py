@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
+
 
 class UserSchema(BaseModel):
     id:int
@@ -8,10 +9,12 @@ class UserSchema(BaseModel):
     email:EmailStr
     password:str
     phone:str
+    group:list 
     
     class Config:
         orm_mode = True
         
+
 class UserEditSchema(BaseModel):
     first_name:str
     last_name:str
@@ -19,6 +22,21 @@ class UserEditSchema(BaseModel):
 
     class Config:
         orm_mode = True
+        
+class UserCreateSchema(BaseModel):  
+    first_name:str
+    last_name:str
+    email:EmailStr
+    phone:str
+    password:str
+    group_id:int
+    
+    class Config:
+        orm_mode = True
+        
+class UserActiveSchema(UserSchema):
+    is_active:bool
+
 
 
         
