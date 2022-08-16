@@ -32,6 +32,7 @@ def authenticate_user(email: str, password: str):
 def get_user(email: str):
     if email in [i.email for i in dao_handler.user_dao.get_all()]:
         user_dict = dao_handler.user_dao.get_by_email(email)
+        for i in user_dict.group: user_dict.__dict__.update({"group":[i]})
         return UserActiveSchema(**user_dict.__dict__)
 
 # function used for signing the JWT string
