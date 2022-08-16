@@ -76,3 +76,12 @@ class Product(Base):
     updated_on = Column(DateTime, default = datetime.now())    
 
     
+class Inventory(Base):
+    __tablename__ = 'inventory'
+    id = Column(Integer, primary_key = True)
+    product_id = Column(Integer, ForeignKey('products.id'), nullable = False)
+    product = relationship('Product', uselist = False, foreign_keys = [product_id])
+    created_by_id = Column(Integer, ForeignKey("users.id"), nullable = False)
+    created_by = relationship("User", foreign_keys = [created_by_id])
+    created_on = Column(DateTime, default = datetime.now())
+    updated_on = Column(DateTime, default = datetime.now())
