@@ -1,7 +1,7 @@
-from sqlalchemy.orm import relationship
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text, Float
-from sqlalchemy_utils import ChoiceType
 from datetime import datetime
+from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text, Float, func
+from sqlalchemy_utils import ChoiceType
 from database.database import Base, db
 
 
@@ -50,6 +50,7 @@ class Group(Base):
     user = relationship("User", secondary = user_group)
 
 
+
 class Product(Base):
     __tablename__ = 'products'
     id = Column(Integer, primary_key = True)
@@ -73,6 +74,4 @@ class Product(Base):
     created_by = Column(Integer, ForeignKey("users.id"), nullable = False)
     updated_by = Column(Integer, ForeignKey("users.id"), nullable = True)
     created_on = Column(DateTime, default = datetime.now())
-    updated_on = Column(DateTime, default = datetime.now())    
-
-    
+    updated_on = Column(DateTime, default = datetime.now())
