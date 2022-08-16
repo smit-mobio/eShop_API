@@ -29,6 +29,9 @@ def add_product(form:AddProductSchema,response:Response,user:User = Depends(get_
 @only_product_owner()
 def get_all_product(response:Response, user=Depends(get_current_active_user)):
     products = dao_handler.product_dao.get_products_of_product_owner(user.id)
+    if not products:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {'error':"You didn't have added any products!"}
     return products
 
 @router.get('/products/{id}')
@@ -44,7 +47,7 @@ def get_product(id, response:Response, user=Depends(get_current_active_user)):
 @router.delete('/remove_product/{id}')
 @only_product_owner()
 def remove_product(id:int, response:Response,  user:User = Depends(get_current_active_user) ):
-    product = dao_handler.product_dao.get_by_id(id)
+    product = dao_handler.product_dao.get_product_of_product_owner(product_onwer_id=user.id, product_id=id)
     if product:
         Data.delete(product)
         return {'message': 'Your product is successfully removed!'}
