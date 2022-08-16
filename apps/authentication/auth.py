@@ -32,10 +32,6 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
 def read_users_me(current_user: UserSchema = Depends(get_current_active_user)):
     return current_user
 
-# @router.get('/user/logout/')
-# def logout(current_user:UserSchema = Depends(get_current_active_user)):
-#     token = TokenData(email=current_user.email, )
-
 
 @router.post('/user/change_password/')
 def change_password(form: ChangePasswordSchema, user:User = Depends(get_current_active_user)):
