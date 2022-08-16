@@ -37,7 +37,7 @@ def read_users_me(current_user: UserSchema = Depends(get_current_active_user)):
 def change_password(form: ChangePasswordSchema, user:User = Depends(get_current_active_user)):
     current_user = dao_handler.user_dao.get_by_id(user.id)
     if form.password != form.new_password:
-        return {'message':'Your password did not changed due to mismatch!'}
+        return {'message':'Your password did not change due to mismatch!'}
     current_user.password = common_function.get_password_hash(form.password)
     Data.commit()
     return {'message':'Your password is successfully changed!'}
