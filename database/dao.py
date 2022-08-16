@@ -36,6 +36,5 @@ class GroupDao(GenericDao):
 class DaoHandler:
     user_dao = UserDao()
     group_dao = GroupDao()
-
 dao_handler = DaoHandler()
 
