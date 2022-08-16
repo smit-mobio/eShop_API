@@ -10,7 +10,7 @@ from utils.decorators import only_product_owner
 router = APIRouter(prefix='/auth/user/product_owner', tags=['Product-Owner'], dependencies=[Depends(get_current_active_user)])
 
 @router.post('/add_product/', description="add category_id into category field. <br>Id : Category <br>---------------- <br>1 : Man <br>2 : Women <br>3 : Kids")
-@only_product_owner
+@only_product_owner()
 def add_product(form:AddProductSchema,response:Response,user:User = Depends(get_current_active_user)):
     if form.category not in [1,2,3]:
         response.status_code = status.HTTP_400_BAD_REQUEST
@@ -26,13 +26,13 @@ def add_product(form:AddProductSchema,response:Response,user:User = Depends(get_
     return {'message':"Your product is successfully added."}
 
 @router.get('/products/')
-@only_product_owner
+@only_product_owner()
 def get_all_product(response:Response, user=Depends(get_current_active_user)):
     products = dao_handler.product_dao.get_products_of_product_owner(user.id)
     return products
 
 @router.get('/products/{id}')
-# @only_product_owner
+@only_product_owner()
 def get_product(id, response:Response, user=Depends(get_current_active_user)):
     products = dao_handler.product_dao.get_product_of_product_owner(user.id, id)
     if products:
@@ -42,7 +42,7 @@ def get_product(id, response:Response, user=Depends(get_current_active_user)):
 
     
 @router.delete('/remove_product/{id}')
-# @only_product_owner
+@only_product_owner()
 def remove_product(id:int, response:Response,  user:User = Depends(get_current_active_user) ):
     product = dao_handler.product_dao.get_by_id(id)
     if product:
@@ -77,4 +77,5 @@ def update_product(id, form:AddProductSchema, response:Response, user:User = Dep
         return {'message':'Your product is successfully updated'}
     response.status_code = status.HTTP_404_NOT_FOUND
     return {'error':'Product you are looking for is not exitst.'}
+
 
