@@ -36,7 +36,3 @@ class UserCreateSchema(BaseModel):
         
 class UserActiveSchema(UserSchema):
     is_active:bool
-
-
-
-        
