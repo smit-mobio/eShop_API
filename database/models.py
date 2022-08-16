@@ -49,6 +49,8 @@ class Group(Base):
     updated_on = Column(DateTime, nullable = False)
     user = relationship("User", secondary = user_group)
 
+
+
 class Product(Base):
     __tablename__ = 'products'
     id = Column(Integer, primary_key = True)
