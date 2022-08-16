@@ -12,7 +12,13 @@ class UserSchema(BaseModel):
     class Config:
         orm_mode = True
         
+class UserEditSchema(BaseModel):
+    first_name:str
+    last_name:str
+    phone:str
 
+    class Config:
+        orm_mode = True
 
 
         
