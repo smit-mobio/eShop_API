@@ -41,12 +41,12 @@ class ProductDao(GenericDao):
         return db.query(self.model).filter_by(created_by = product_onwer_id).all()
 
     def get_product_of_product_owner(self, product_onwer_id, product_id):
-        return db.query(self.model).filter_by(created_by = product_onwer_id, id = product_id).all()
+        return db.query(self.model).filter_by(created_by = product_onwer_id, id = product_id).first()
 
 class DaoHandler:
     user_dao = UserDao()
     group_dao = GroupDao()
     product_dao = ProductDao()
-    
+
 dao_handler = DaoHandler()
 

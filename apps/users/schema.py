@@ -14,6 +14,15 @@ class UserSchema(BaseModel):
     class Config:
         orm_mode = True
         
+
+class UserEditSchema(BaseModel):
+    first_name:str
+    last_name:str
+    phone:str
+
+    class Config:
+        orm_mode = True
+        
 class UserCreateSchema(BaseModel):  
     first_name:str
     last_name:str
@@ -27,6 +36,3 @@ class UserCreateSchema(BaseModel):
         
 class UserActiveSchema(UserSchema):
     is_active:bool
-
-
-        
