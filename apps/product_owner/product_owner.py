@@ -21,8 +21,8 @@ def add_product(form:ProductAddSchema,response:Response,user:User = Depends(get_
         3:'Kids'
     }
     product = Product(name = form.type, detail = form.detail,price = form.price,  brand = form.brand, quantity = form.quantity, status = product_status, category = category[form.category], created_by = user.id, updated_by = user.id)
-    product_in_inventory = Inventory(product_id = product.id, created_by_id = user.id)
     Data.add(product)
+    product_in_inventory = Inventory(product_id = product.id, created_by_id = user.id)
     Data.add(product_in_inventory)
     return {'message':"Your product is successfully added."}
 
