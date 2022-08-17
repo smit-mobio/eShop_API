@@ -59,6 +59,7 @@ class DaoHandler:
     user_dao = UserDao()
     group_dao = GroupDao()
     product_dao = ProductDao()
+    inventory_dao = InventoryDao()
     
 dao_handler = DaoHandler()
 
