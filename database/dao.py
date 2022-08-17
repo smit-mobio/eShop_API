@@ -43,6 +43,18 @@ class ProductDao(GenericDao):
     def get_product_of_product_owner(self, product_onwer_id, product_id):
         return db.query(self.model).filter_by(created_by = product_onwer_id, id = product_id).first()
 
+class InventoryDao(GenericDao):
+    model = models.Inventory
+
+    def get_products_of_product_owner(self, product_onwer_id):
+        return db.query(self.model).filter_by(created_by = product_onwer_id).all()
+
+    def get_product_of_product_owner(self, product_onwer_id, product_id):
+        return db.query(self.model).filter(self.model.created_by == product_onwer_id, self.model.product_id == product_id).first()
+    
+    def get_active_product(self):
+        return db.query(self.model).filter_by(is_active = True).all()
+        
 class DaoHandler:
     user_dao = UserDao()
     group_dao = GroupDao()
