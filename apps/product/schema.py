@@ -19,3 +19,6 @@ class ProductUpdateSchema(BaseModel):
     price:float
     quantity:int
     is_active:bool
+
+class ProductActiveSchema(BaseModel):
+    is_active:bool
