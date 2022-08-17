@@ -28,7 +28,7 @@ app.include_router(auth.router)
 app.include_router(product_owner.router)
 app.include_router(product_owner_profile.router)
 app.include_router(customer_profile.router)
-# app.include_router(customer)
+app.include_router(customer.router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host='localhost', port=8000, reload= True)
