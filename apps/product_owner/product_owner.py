@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import APIRouter, Depends, Response, status
 from apps.authentication.auth import get_current_active_user
-from apps.product.schema import ProductAddSchema, ProductSchema
+from apps.product.schema import ProductAddSchema, ProductActiveSchema
 from database.models import Data, Inventory, User, Product, Integer
 from database.dao import dao_handler
 from utils.decorators import only_product_owner
@@ -35,7 +35,7 @@ def get_all_product(response:Response, user=Depends(get_current_active_user)):
         return {'error':"You didn't have added any products!"}
     return products
 
-@router.get('/products/{id}')
+@router.get('/product/{id}')
 @only_product_owner()
 def get_product(id, response:Response, user=Depends(get_current_active_user)):
     products = dao_handler.product_dao.get_product_of_product_owner(user.id, id)
@@ -55,7 +55,7 @@ def remove_product(id:int, response:Response,  user:User = Depends(get_current_a
     response.status_code = status.HTTP_404_NOT_FOUND
     return {'error':"Product you want to remove is not exists!"}
 
-@router.patch('/edit_product/{id}', description="Add category_id into category field. <br>Id : Category <br>---------------- <br>1 : Man <br>2 : Women <br>3 : Kids")
+@router.put('/edit_product/{id}', description="Add category_id into category field. <br>Id : Category <br>---------------- <br>1 : Man <br>2 : Women <br>3 : Kids")
 def update_product(id, form:ProductAddSchema, response:Response, user:User = Depends(get_current_active_user)):
     product = dao_handler.product_dao.get_by_id(id)
     if product:
@@ -82,4 +82,10 @@ def update_product(id, form:ProductAddSchema, response:Response, user:User = Dep
     response.status_code = status.HTTP_404_NOT_FOUND
     return {'error':'Product you are looking for is not exitst.'}
 
+@router.patch('/product_active/{id}')
+@only_product_owner()
+def make_product_active(id,form:ProductActiveSchema, response:Response, user = Depends(get_current_active_user)):
+    product = dao_handler.inventory_dao.get_by_id(id)
+    print(product)
+    return product
 
