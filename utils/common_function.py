@@ -4,7 +4,6 @@ from database.database import db
 import string
 from passlib.context import CryptContext
 from database.dao import dao_handler
-from fastapi import status
 from datetime import datetime
 from database.models import Data
 from utils.validations import validate_phonenumber
@@ -74,3 +73,14 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(password):
     return pwd_context.hash(password)
+
+def update_profile(data, user):
+    user_to_update = dao_handler.user_dao.get_by_id(user.id)
+    user_to_update.first_name = data.first_name
+    user_to_update.last_name = data.last_name
+    if not validate_phonenumber(data.phone):
+        return False
+    user_to_update.phone = data.phone
+    user_to_update.updated_on = datetime.now()
+    Data.commit()
+    return True
