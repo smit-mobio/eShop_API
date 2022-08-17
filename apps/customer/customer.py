@@ -7,4 +7,6 @@ router = APIRouter(prefix='/auth/user/customer', tags=['Customer'], dependencies
 @router.get('/products/')
 @only_customer()
 def all_products(response:Response, user = Depends(get_current_active_user)):
-    products = dao_handler
+    products = dao_handler.inventory_dao.get_active_product()
+    print(products)
+    return products
